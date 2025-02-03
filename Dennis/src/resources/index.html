@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frota de Veículos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>Gestão da Frota de Veículos</h1>
+    </header>
+
+    <section id="filtro" class="box">
+        <h2>Filtrar Veículos</h2>
+        <form onsubmit="filtrarVeiculos(event)">
+            <div class="form-group">
+                <label for="filtroTipo">Tipo</label>
+                <select id="filtroTipo">
+                    <option value="">Todos</option>
+                    <option value="carro">Carro</option>
+                    <option value="moto">Moto</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="filtroModelo">Modelo</label>
+                <input type="text" id="filtroModelo" placeholder="Digite o modelo">
+            </div>
+
+            <div class="form-group">
+                <label for="filtroAno">Ano</label>
+                <input type="number" id="filtroAno" placeholder="Digite o ano">
+            </div>
+
+            <button type="submit" class="btn">Filtrar</button>
+        </form>
+    </section>
+
+    <section id="tabelaVeiculos" class="box">
+        <h2>Veículos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Modelo</th>
+                    <th>Fabricante</th>
+                    <th>Ano</th>
+                    <th>Preço</th>
+                    <th>Tipo</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Veículos serão carregados aqui -->
+            </tbody>
+        </table>
+    </section>
+
+    <section id="formularioCadastro" class="box" style="display:none;">
+        <h2>Cadastrar Novo Veículo</h2>
+        <form onsubmit="salvarVeiculo(event)">
+            <div class="form-group">
+                <label for="modelo">Modelo</label>
+                <input type="text" id="modelo" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fabricante">Fabricante</label>
+                <input type="text" id="fabricante" required>
+            </div>
+
+            <div class="form-group">
+                <label for="ano">Ano</label>
+                <input type="number" id="ano" required>
+            </div>
+
+            <div class="form-group">
+                <label for="preco">Preço</label>
+                <input type="number" id="preco" required>
+            </div>
+
+            <div class="form-group">
+                <label for="tipo">Tipo</label>
+                <select id="tipo" required>
+                    <option value="carro">Carro</option>
+                    <option value="moto">Moto</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn">Salvar</button>
+            <button type="button" class="btn-cancel" onclick="fecharFormularioCadastro()">Cancelar</button>
+        </form>
+    </section>
+
+    <button id="btnAdicionar" class="btn" onclick="abrirFormularioCadastro()">Adicionar Veículo</button>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

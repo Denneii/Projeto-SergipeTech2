@@ -1,0 +1,163 @@
+/* Resetando estilos padrões */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+}
+
+header {
+    background-color: #35424a;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    font-size: 2rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+.box {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    width: 80%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h2 {
+    margin-bottom: 1.5rem;
+    color: #35424a;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #444;
+}
+
+input,
+select,
+button {
+    padding: 0.75rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-top: 0.5rem;
+}
+
+input[type="number"],
+input[type="text"],
+select {
+    background-color: #fafafa;
+}
+
+button {
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button:active {
+    background-color: #398d3a;
+}
+
+button.btn-cancel {
+    background-color: #f44336;
+    margin-top: 1rem;
+}
+
+button.btn-cancel:hover {
+    background-color: #e53935;
+}
+
+button.btn-cancel:active {
+    background-color: #d32f2f;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+}
+
+th,
+td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #35424a;
+    color: white;
+}
+
+td {
+    background-color: #f9f9f9;
+}
+
+td button {
+    background-color: #f0ad4e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+td button:hover {
+    background-color: #ec971f;
+}
+
+td button:active {
+    background-color: #d58512;
+}
+
+#btnAdicionar {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin: 2rem auto;
+}
+
+#btnAdicionar:hover {
+    background-color: #0056b3;
+}
+
+#btnAdicionar:active {
+    background-color: #004085;
+}

@@ -1,0 +1,8 @@
+com\fleet\Controllers\VeiculoController.class
+com\fleet\Repositories\CarroRepository.class
+com\fleet\Entities\Veiculo.class
+com\fleet\Repositories\MotoRepository.class
+com\fleet\Repositories\VeiculoRepository.class
+com\fleet\Entities\Carro.class
+com\fleet\FleetApplication.class
+com\fleet\Entities\Moto.class
