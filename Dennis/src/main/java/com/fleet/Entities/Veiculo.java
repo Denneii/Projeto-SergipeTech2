@@ -1,57 +1,59 @@
 package com.fleet.Entities;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.Table;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)  // Usando a estratégia SINGLE_TABLE
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo", discriminatorType = DiscriminatorType.STRING)
+@Table(name = "veiculo")
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "tipo"
+)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Carro.class, name = "CARRO"),
+    @JsonSubTypes.Type(value = Moto.class, name = "MOTO")
+})
 public abstract class Veiculo {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
+    private Integer id;
+
+    @Column(nullable = false)
     private String modelo;
+
+    @Column(nullable = false)
     private String fabricante;
-    private int ano;
-    private double preco;
-    
-    @Column(insertable = false, updatable = false)
-    private String dtype;
-    
-    @Column(name = "tipo_combustivel")
-    private String tipoCombustivel;  // Tipo de combustível
-    
-    @Column(name = "numero_portas")
-    private Integer portas;  // Número de portas
 
-    @Column(name = "cilindradas_motor")
-    private Integer cilindradas;  // Número de cilindradas do motor
+    @Column(nullable = false)
+    private Integer ano;
 
-    public Veiculo() {}
+    @Column(nullable = false)
+    private Double preco;
 
-    public Veiculo(Long id, String modelo, String fabricante, int ano, double preco, String dtype, 
-                   String tipoCombustivel, Integer portas, Integer cilindradas) {
-        this.id = id;
-        this.modelo = modelo;
-        this.fabricante = fabricante;
-        this.ano = ano;
-        this.preco = preco;
-        this.dtype = dtype;
-        this.tipoCombustivel = tipoCombustivel;
-        this.portas = portas;
-        this.cilindradas = cilindradas;
-    }
+    @Column(nullable = false)
+    private String cor;
 
-    public Long getId() {
+    // Getters e Setters
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -71,51 +73,28 @@ public abstract class Veiculo {
         this.fabricante = fabricante;
     }
 
-    public int getAno() {
+    public Integer getAno() {
         return ano;
     }
 
-    public void setAno(int ano) {
+    public void setAno(Integer ano) {
         this.ano = ano;
     }
 
-    public double getPreco() {
+    public Double getPreco() {
         return preco;
     }
 
-    public void setPreco(double preco) {
+    public void setPreco(Double preco) {
         this.preco = preco;
     }
 
-    public String getDtype() {
-        return dtype;
+    public String getCor() {
+        return cor;
     }
 
-    public void setDtype(String dtype) {
-        this.dtype = dtype;
+    public void setCor(String cor) {
+        this.cor = cor;
     }
 
-    public String getTipoCombustivel() {
-        return tipoCombustivel;
-    }
-
-    public void setTipoCombustivel(String tipoCombustivel) {
-        this.tipoCombustivel = tipoCombustivel;
-    }
-
-    public Integer getPortas() {
-        return portas;
-    }
-
-    public void setPortas(Integer portas) {
-        this.portas = portas;
-    }
-
-    public Integer getCilindradas() {
-        return cilindradas;
-    }
-
-    public void setCilindradas(Integer cilindradas) {
-        this.cilindradas = cilindradas;
-    }
 }

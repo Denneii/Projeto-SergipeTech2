@@ -1,23 +1,25 @@
 package com.fleet.Entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("carro")
+@DiscriminatorValue("CARRO")
 public class Carro extends Veiculo {
-    private int quantidadePortas;
-    private String tipoCombustivel;
 
-    public Carro() {
-        super();
-    }
+    @Column(nullable = false)
+    private Integer quantidadePortas;
 
-    public int getQuantidadePortas() {
+    @Column(nullable = false)
+    private String tipoCombustivel; // gasolina, etanol, diesel, flex
+
+    // Getters e Setters
+    public Integer getQuantidadePortas() {
         return quantidadePortas;
     }
 
-    public void setQuantidadePortas(int quantidadePortas) {
+    public void setQuantidadePortas(Integer quantidadePortas) {
         this.quantidadePortas = quantidadePortas;
     }
 

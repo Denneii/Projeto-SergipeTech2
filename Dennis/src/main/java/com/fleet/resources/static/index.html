@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Fleet Management</title>
+    <style>
+      /* Estilo básico */
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 8px;
+        text-align: center;
+      }
+      h1,
+      h2 {
+        text-align: center;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f4f4f9;
+      }
+      form {
+        max-width: 600px;
+        margin: 0 auto 20px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 8px;
+        margin: 5px 0 15px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      input[type="submit"] {
+        background-color: #4caf50;
+        color: white;
+        cursor: pointer;
+        border: none;
+        padding: 10px 15px;
+        width: auto;
+        display: block;
+        margin-top: 10px;
+        border-radius: 4px;
+      }
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+      table {
+        width: 100%;
+        margin-top: 20px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      th {
+        background-color: #4caf50;
+        color: white;
+      }
+      td button {
+        background-color: #f44336;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        margin: 2px;
+        border-radius: 4px;
+      }
+      td button:hover {
+        background-color: #e53935;
+      }
+      td button:nth-child(2) {
+        background-color: #2196f3;
+      }
+      td button:nth-child(2):hover {
+        background-color: #1e88e5;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Fleet Management</h1>
+
+    <h2>Adicionar Novo Veículo</h2>
+    <form id="vehicleForm">
+      <label for="tipo">Tipo:</label>
+      <select id="tipo" name="tipo" required>
+        <option value="">Selecione</option>
+        <option value="CARRO">Carro</option>
+        <option value="MOTO">Moto</option></select
+      ><br /><br />
+
+      <label for="modelo">Modelo:</label>
+      <input type="text" id="modelo" name="modelo" required /><br /><br />
+
+      <label for="fabricante">Fabricante:</label>
+      <input
+        type="text"
+        id="fabricante"
+        name="fabricante"
+        required
+      /><br /><br />
+
+      <label for="ano">Ano:</label>
+      <input type="number" id="ano" name="ano" required /><br /><br />
+
+      <label for="preco">Preço:</label>
+      <input
+        type="number"
+        step="0.01"
+        id="preco"
+        name="preco"
+        required
+      /><br /><br />
+
+      <label for="cor">Cor:</label>
+      <input type="text" id="cor" name="cor" required /><br /><br />
+
+      <!-- Campos adicionais para Carro -->
+      <div id="carroFields" style="display: none">
+        <label for="quantidadePortas">Quantidade de Portas:</label>
+        <input
+          type="number"
+          id="quantidadePortas"
+          name="quantidadePortas"
+        /><br /><br />
+
+        <label for="tipoCombustivel">Tipo de Combustível:</label>
+        <select id="tipoCombustivel" name="tipoCombustivel">
+          <option value="">Selecione</option>
+          <option value="gasolina">Gasolina</option>
+          <option value="etanol">Etanol</option>
+          <option value="diesel">Diesel</option>
+          <option value="flex">Flex</option></select
+        ><br /><br />
+      </div>
+
+      <!-- Campo adicional para Moto -->
+      <div id="motoFields" style="display: none">
+        <label for="cilindrada">Cilindrada:</label>
+        <input type="number" id="cilindrada" name="cilindrada" /><br /><br />
+      </div>
+
+      <input type="submit" value="Adicionar Veículo" />
+    </form>
+
+    <h2>Lista de Veículos</h2>
+    <table id="vehiclesTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Tipo</th>
+          <th>Modelo</th>
+          <th>Fabricante</th>
+          <th>Ano</th>
+          <th>Preço</th>
+          <th>Cor</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Registros serão inseridos aqui -->
+      </tbody>
+    </table>
+
+    <script>
+      const vehicleForm = document.getElementById("vehicleForm");
+      const tipoSelect = document.getElementById("tipo");
+      const carroFields = document.getElementById("carroFields");
+      const motoFields = document.getElementById("motoFields");
+      const vehiclesTableBody = document.querySelector("#vehiclesTable tbody");
+
+      // Exibe campos adicionais conforme o tipo selecionado
+      tipoSelect.addEventListener("change", function () {
+        if (this.value === "CARRO") {
+          carroFields.style.display = "block";
+          motoFields.style.display = "none";
+        } else if (this.value === "MOTO") {
+          motoFields.style.display = "block";
+          carroFields.style.display = "none";
+        } else {
+          carroFields.style.display = "none";
+          motoFields.style.display = "none";
+        }
+      });
+
+      // Função para carregar os veículos
+      function loadVehicles() {
+        fetch("http://localhost:8080/api/veiculos")
+          .then((response) => response.json())
+          .then((data) => {
+            vehiclesTableBody.innerHTML = "";
+            data.forEach((vehicle) => {
+              const tr = document.createElement("tr");
+              tr.innerHTML = `
+                            <td>${vehicle.id}</td>
+                            <td>${vehicle.tipo}</td>
+                            <td>${vehicle.modelo}</td>
+                            <td>${vehicle.fabricante}</td>
+                            <td>${vehicle.ano}</td>
+                            <td>${vehicle.preco}</td>
+                            <td>${vehicle.cor}</td>
+                            <td>
+                                <button onclick="deleteVehicle(${vehicle.id})">Excluir</button>
+                                <button onclick="editVehicle(${vehicle.id})">Editar</button>
+                            </td>
+                        `;
+              vehiclesTableBody.appendChild(tr);
+            });
+          });
+      }
+
+      // Submissão do formulário para criar veículo
+      vehicleForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const tipo = tipoSelect.value;
+        const data = {
+          tipo: tipo,
+          modelo: document.getElementById("modelo").value,
+          fabricante: document.getElementById("fabricante").value,
+          ano: parseInt(document.getElementById("ano").value),
+          preco: parseFloat(document.getElementById("preco").value),
+          cor: document.getElementById("cor").value,
+        };
+
+        if (tipo === "CARRO") {
+          data.quantidadePortas = parseInt(
+            document.getElementById("quantidadePortas").value
+          );
+          data.tipoCombustivel =
+            document.getElementById("tipoCombustivel").value;
+        } else if (tipo === "MOTO") {
+          data.cilindrada = parseInt(
+            document.getElementById("cilindrada").value
+          );
+        }
+
+        fetch("http://localhost:8080/api/veiculos", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then(() => {
+            loadVehicles();
+            vehicleForm.reset();
+            carroFields.style.display = "none";
+            motoFields.style.display = "none";
+          });
+      });
+
+      // Excluir veículo
+      function deleteVehicle(id) {
+        fetch(`http://localhost:8080/api/veiculos/${id}`, {
+          method: "DELETE",
+        }).then(() => loadVehicles());
+      }
+
+      // Editar veículo (utilizando prompts para simplificar)
+      function editVehicle(id) {
+        fetch(`http://localhost:8080/api/veiculos/${id}`)
+          .then((response) => response.json())
+          .then((vehicle) => {
+            const modelo = prompt("Modelo:", vehicle.modelo);
+            const fabricante = prompt("Fabricante:", vehicle.fabricante);
+            const ano = prompt("Ano:", vehicle.ano);
+            const preco = prompt("Preço:", vehicle.preco);
+            const cor = prompt("Cor:", vehicle.cor);
+
+            const updatedVehicle = {
+              ...vehicle,
+              modelo: modelo,
+              fabricante: fabricante,
+              ano: parseInt(ano),
+              preco: parseFloat(preco),
+              cor: cor,
+            };
+
+            if (vehicle.tipo === "CARRO") {
+              const quantidadePortas = prompt(
+                "Quantidade de Portas:",
+                vehicle.quantidadePortas
+              );
+              const tipoCombustivel = prompt(
+                "Tipo de Combustível:",
+                vehicle.tipoCombustivel
+              );
+              updatedVehicle.quantidadePortas = parseInt(quantidadePortas);
+              updatedVehicle.tipoCombustivel = tipoCombustivel;
+            } else if (vehicle.tipo === "MOTO") {
+              const cilindrada = prompt("Cilindrada:", vehicle.cilindrada);
+              updatedVehicle.cilindrada = parseInt(cilindrada);
+            }
+
+            fetch(`http://localhost:8080/api/veiculos/${id}`, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(updatedVehicle),
+            }).then(() => loadVehicles());
+          });
+      }
+
+      // Carrega os veículos ao iniciar a página
+      loadVehicles();
+    </script>
+  </body>
+</html>

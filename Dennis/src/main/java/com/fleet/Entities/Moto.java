@@ -1,22 +1,22 @@
 package com.fleet.Entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("moto")
+@DiscriminatorValue("MOTO")
 public class Moto extends Veiculo {
-    private int cilindrada;
 
-    public Moto() {
-        super();
-    }
+    @Column(nullable = false)
+    private Integer cilindrada;
 
-    public int getCilindrada() {
+    // Getters e Setters
+    public Integer getCilindrada() {
         return cilindrada;
     }
 
-    public void setCilindrada(int cilindrada) {
+    public void setCilindrada(Integer cilindrada) {
         this.cilindrada = cilindrada;
     }
 }
